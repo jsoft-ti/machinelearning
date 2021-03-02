@@ -1,0 +1,28 @@
+## Parâmetros para formatação do plot
+W_PLOT: 1500
+H_PLOT: 600
+TOOLS : 'pan,wheel_zoom,reset'
+VBAR_WIDTH : 0.2
+RED : Category20[7][6]
+GREEN : Category20[5][4]
+BLUE : Category20[3][0]
+BLUE_LIGHT : Category20[3][1]
+ORANGE : Category20[3][2]
+PURPLE : Category20[9][8]
+BROWN : Category20[11][10]
+MY_FORMAT : '%d/%m/%Y'
+
+## Lista de campos utilizados em um sumário padrão
+data_columns : ['id', 'coin', 'date', 'opening', 'closing', 'lowest', 'highest', 'volume', 'quantity', 'amount', 'avg_price']
+data_path : 'resources/data/bdcsv.csv'
+columns_to_remove : ['daxlowest', 'daxhighest', 'djilowest', 'djihighest', 'hsilowest', 'hsihighest']
+df_closing_columns : ['btc', 'dji', 'dax', 'hsi', 'year', 'month', 'day']
+window : 5
+max_depth : 10
+num_leaves : 20
+n_estimators : 1000
+
+gap : 0
+max_train_size : 90
+n_splits : 10
+test_size : 14
