@@ -1,0 +1,14 @@
+## caminho dos dados
+caminho_dados : '/home/lucio/Área de Trabalho/DS05/Untitled Folder/'
+
+
+## arquivos que serão analisados
+nome_arquivo : 'teste_aula.csv'
+
+## nome da coluna de interesse
+coluna : 'nomes'
+
+
+#lista para imprimir
+lista_teste : [1, 30, 4, 5, 'teste']
+

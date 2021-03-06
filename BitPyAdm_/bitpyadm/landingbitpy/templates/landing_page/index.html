@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Add Your favicon here -->
+    <!--<link rel="icon" href="img/favicon.ico">-->
+
+    <title>INSPINIA - Landing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'landing/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href="{% static 'landing/css/animate.css' %}" rel="stylesheet">
+
+    <link href="{% static 'landing/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js' %}"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js' %}"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'landing/css/style.css' %}" rel="stylesheet">
+</head>
+<body id="page-top" class="landing-page">
+<div class="navbar-wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="#">Bitpy</a>
+            <div class="navbar-header page-scroll">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="nav-link page-scroll" href="#page-top">Home</a></li>
+                    <li><a class="nav-link page-scroll" href="#features">Produtos</a></li>
+                    <li><a class="nav-link page-scroll" href="#team">Time</a></li>
+                    <li><a class="nav-link page-scroll" href="#testimonials">Game Score</a></li>
+                    <li><a class="nav-link page-scroll" href="#pricing">Planos</a></li>
+                    <li><a class="nav-link page-scroll" href="#contact">Contato</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div id="inSlider" class="carousel slide" data-ride="carousel" >
+    <ol class="carousel-indicators">
+        <li data-target="#inSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#inSlider" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Nos temos<br/>
+                        os algoritmos para<br/>
+                        melhor avaliar<br/>
+                        o seu risco</h1>
+                    <p>Você é o analista, nos somos a inteligência.</p>
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="#pricing" role="button">Conheça nossos Planos</a>
+
+                    </p>
+                </div>
+                <div class="carousel-image wow zoomIn">
+                    <img src="{% static 'landing/img/laptop.png' %}" alt="laptop"/>
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+
+
+            <div class="header-back one"></div>
+
+        </div>
+        <div class="carousel-item">
+            <div class="container">
+                <div class="carousel-caption blank">
+                    <h1>We create meaningful <br/> interfaces that inspire.</h1>
+                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back two"></div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#inSlider" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#inSlider" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<section id="features" class="container services">
+    <section  class="container features">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>Conheça os produtos<br/> <span class="navy"> que fundamentar sua análise técnica</span>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-center wow fadeInLeft">
+            <div>
+                <i class="fa fa-mobile features-icon"></i>
+                <h2>NEXT BITCOIN</h2>
+                <p>Receba a estimativa do valor futuro do BitCoin para os próximos 7 dias, com base nos principais índices internacionais.</p>
+            </div>
+            <div class="m-t-lg">
+                <i class="fa fa-bar-chart features-icon"></i>
+                <h2>CORR PTR4</h2>
+                <p>Descubra quais as ações possuem variação correlacionadas com esse papel que já virou um indicador para o mercado.</p>
+            </div>
+        </div>
+        <div class="col-md-6 text-center  wow zoomIn">
+            <img src="{% static 'landing/img/perspective.png' %}" alt="dashboard" class="img-fluid">
+        </div>
+        <div class="col-md-3 text-center wow fadeInRight">
+            <div>
+                <i class="fa fa-envelope features-icon"></i>
+                <h2>NEXT IBOV</h2>
+                <p>Acompanhe a previsão futuro deste índice juntamente com intervalo de confiança e análise de especialistas.</p>
+            </div>
+            <div class="m-t-lg">
+                <i class="fa fa-google features-icon"></i>
+                <h2>Community Models</h2>
+                <p>Seja premium. Vote em um ativo e tenha acesso aos modelos eleitos pela comunidade.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>Next BitCoin</h2>
+            <p>Receba a estimativa do valor futuro do BitCoin para os próximos 7 dias, com base nos principais índices internacionais.</p>
+
+        </div>
+        <div class="col-sm-3">
+            <h2>Next IBOV</h2>
+            <p>Acompanhe a previsão futuro deste índice juntamente com intervalo de confiança e análise de especialistas.</p>
+
+        </div>
+        <div class="col-sm-3">
+            <h2>Corr PTR4</h2>
+            <p>Descubra quais as ações possuem variação correlacionadas com esse papel que já virou um indicador para o mercado.</p>
+
+        </div>
+        <div class="col-sm-3">
+            <h2>Vote Model</h2>
+            <p>Seja premium. Vote em um ativo e tenha acesso aos modelos eleitos pela comunidade. </p>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section id="team" class="gray-section team">
+    <div class="container">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>Our Team</h1>
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 wow fadeInLeft">
+                <div class="team-member">
+                    <img src="img/avatar3.jpg" class="img-fluid rounded-circle img-small" alt="">
+                    <h4><span class="navy">Amelia</span> Smith</h4>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus. </p>
+                    <ul class="list-inline social-icon">
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="team-member wow zoomIn">
+                    <img src="img/avatar1.jpg" class="img-fluid rounded-circle" alt="">
+                    <h4><span class="navy">John</span> Novak</h4>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
+                    <ul class="list-inline social-icon">
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 wow fadeInRight">
+                <div class="team-member">
+                    <img src="img/avatar2.jpg" class="img-fluid rounded-circle img-small" alt="">
+                    <h4><span class="navy">Peter</span> Johnson</h4>
+                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
+                    <ul class="list-inline social-icon">
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center m-t-lg m-b-lg">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class="features comments gray-section" id="testimonials">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>Game Score</h1>
+                <h2>Quer saber porque confiar em nossos algoritmos?</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-lg-offset-1 features-text">
+
+                <h2>Treinamento em Multicenários </h2>
+                <i class="fa fa-bar-chart big-icon float-right"></i>
+                <p>Nossos modelos são treinados em diversas condições para entregar os melhores resultados.</p>
+            </div>
+            <div class="col-lg-5 features-text">
+                <h2>Avaliação de Métricas </h2>
+                <i class="fa fa-bolt big-icon float-right"></i>
+                <p>Os modelos são selecionados com base em sua assertividade e adaptação nos dados reais.</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-lg-offset-1 features-text">
+                <h2>Estabilidade </h2>
+                <i class="fa fa-clock-o big-icon float-right"></i>
+                <p>Os algoritmos são monitorados constantemente para garantir os ajustes de seus parâmetros e manter seu nível de assertividade.</p>
+            </div>
+            <div class="col-lg-5 features-text">
+                <h2>Comunidade</h2>
+                <i class="fa fa-users big-icon float-right"></i>
+                <p>Acompanhe o comportamento de outros investidores como você.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section id="pricing" class="pricing">
+    <div class="container">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>Planos</h1>
+                <p>Nos temos um plano ideal para você</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 wow zoomIn">
+                <ul class="pricing-plan list-unstyled">
+                    <li class="pricing-title">
+                        Basic
+                    </li>
+                    <li class="pricing-desc">
+                        Acompanhe o desenpenho de nossos modelos e saiba o comportamento da comunidade.
+                    </li>
+                    <li class="pricing-price">
+                        <span>Free</span>
+                    </li>
+                    <li>
+                        Dashboards
+                    </li>
+                    <li>
+                       Recomendações da Comunidade
+                    </li>
+
+                    <li>
+                        <a class="btn btn-primary btn-xs" href="admin/register/basic/'Plano Básico Free'">Contratar</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4 wow zoomIn">
+                <ul class="pricing-plan list-unstyled selected">
+                    <li class="pricing-title">
+                        Standard
+                    </li>
+                    <li class="pricing-desc">
+                        Veja as recomendações junto com os ativos que são termômetro para o mercado.</li>
+                    <li class="pricing-price">
+                        <span>$75</span> / mês
+                    </li>
+                    <li>
+                        Dashboards
+                    </li>
+                    <li>
+                       Recomendações da Comunidade
+                    </li>
+                    <li>
+                        CORR PTR4
+                    </li>
+                    <li>
+                        NEXT IBOV
+                    </li>
+                    <li class="plan-action">
+                        <a class="btn btn-primary btn-xs" href="admin/register/standard/'Plano padrão $75 mês'">Contratar</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4 wow zoomIn">
+                <ul class="pricing-plan list-unstyled">
+                    <li class="pricing-title">
+                        Premium
+                    </li>
+                    <li class="pricing-desc">
+                        Obtenha acesso a todos os nossos produtos além dos modelos eleitos pela comunidade.
+                    </li>
+                    <li class="pricing-price">
+                        <span>$120</span> / mês
+                    </li>
+                    <li>
+                        Dashboards
+                    </li>
+                    <li>
+                       Recomendações da Comunidade
+                    </li>
+                    <li>
+                        CORR PTR4
+                    </li>
+                    <LI>
+                        NEXT IBOV
+                    </LI>
+                    <LI>
+                        NEXT BTC
+                    </LI>
+                    <LI>
+                        COMMUNITY MODEL
+                    </LI>
+                    <li>
+                        <a class="btn btn-primary btn-xs" href="admin/register/premium/'Plano Premium $120 mês'">Contratar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row m-t-lg">
+            <div class="col-lg-12 text-center m-t-lg">
+                <p>*Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. <span class="navy">Various versions</span>  have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="contact" class="gray-section contact">
+    <div class="container">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>Contato</h1>
+                <p>Tire suas dúvidas</p>
+            </div>
+        </div>
+        <div class="row m-b-lg justify-content-center">
+            <div class="col-lg-3 ">
+                <address>
+                    <strong><span class="navy">Bitpy, Inc.</span></strong><br/>
+                    1703 Rua Flórida, Cj.2 5 Andar<br/>
+                    São Paulo, BR <br/>
+                    <abbr title="Phone">P:</abbr> (11) 456-7890
+                </address>
+            </div>
+            <div class="col-lg-4">
+                <p class="text-color">
+                           </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <a href="mailto:jocasiso@email.com" class="btn btn-primary">Fale Conosco</a>
+                <p class="m-t-sm">
+                    Siga-nos nas redes sociais
+                </p>
+                <ul class="list-inline social-icon">
+                    <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center m-t-lg m-b-lg">
+                <p><strong>&copy; 2021 Bitpy</strong><br/> </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'landing/js/jquery-2.1.1.js' %}"></script>
+<script src="{% static 'landing/js/pace.min.js' %}"></script>
+<script src="{% static 'landing/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'landing/js/classie.js' %}"></script>
+<script src="{% static 'landing/js/cbpAnimatedHeader.js' %}"></script>
+<script src="{% static 'landing/js/wow.min.js' %}"></script>
+<script src="{% static 'landing/js/inspinia.js' %}"></script>
+</body>
+</html>
