@@ -1,6 +1,11 @@
 from resources.scripts.libs import *
 from resources.scripts.functions import *
+from resources.scripts.predictor import *
+import pickle
+from datetime import datetime
 import yaml
+
+
 # This is a sample Python script.
 
 # Press ⌃R to execute it or replace it with your code.
@@ -18,7 +23,6 @@ if __name__ == '__main__':
     with open('resources/scripts/main_variables.yaml') as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
         df = pd.read_csv(data['data_path'], sep=',', encoding='utf-8')
-
 
         df2 = df.drop(columns=data['columns_to_remove'])
 
@@ -81,8 +85,10 @@ if __name__ == '__main__':
         X = df_closing_5.drop(columns=['btc'])
         Y = df_closing_5.btc
 
-        lgbm = lgb.LGBMRegressor(max_depth=data['max_depth'], num_leaves=data['num_leaves'], n_estimators=data['n_estimators'])
-        tsp = TimeSeriesSplit(gap=data['gap'], max_train_size = data['max_train_size'], n_splits=data['n_splits'], test_size = data['test_size'])
+        lgbm = lgb.LGBMRegressor(max_depth=data['max_depth'], num_leaves=data['num_leaves'],
+                                 n_estimators=data['n_estimators'])
+        tsp = TimeSeriesSplit(gap=data['gap'], max_train_size=data['max_train_size'], n_splits=data['n_splits'],
+                              test_size=data['test_size'])
         metrica_teste = []
         metrica_treino = []
         diff_metrica = []
@@ -97,6 +103,10 @@ if __name__ == '__main__':
 
             pred_treino = my_model.predict(x_treino_norm)
             pred_teste = my_model.predict(x_teste_norm)
+            df_result = pd.DataFrame(columns = ['date', 'value'])
+            df_result['value'] = pred_teste.round(3)
+            df_result['date'] = X.index[test_index]
+            #print(df_result)
             # display()
             # y_treino = y_treino.reset_index().drop(columns = 'date').to_numpy()
             metrica_treino.append(MAPE(y_treino, pred_treino))
@@ -109,15 +119,24 @@ if __name__ == '__main__':
         df_r = pd.DataFrame({'Modelo': "LGBM", 'Periodo': data['max_train_size'], \
                              'Treino': np.mean(metrica_treino), 'Teste': np.mean(metrica_teste)}, index=[0])
 
-        print(np.mean(metrica_teste))
-        print(np.mean(metrica_treino))
-    # metrica["Final_teste_"+model] = metrica_final_teste
-    # metrica["Final_treino_"+model] = metrica_final_treino
-    #metrica['diff'] = (metrica['Teste'] - metrica['Treino']).round(2)
+        #print(np.mean(metrica_teste))
+        #print(np.mean(metrica_treino))
+        # metrica["Final_teste_"+model] = metrica_final_teste
+        # metrica["Final_treino_"+model] = metrica_final_treino
+        # metrica['diff'] = (metrica['Teste'] - metrica['Treino']).round(2)
         diff = np.mean(metrica_teste) - np.mean(metrica_treino)
-        print(diff.round(2))
+        #print(diff.round(2))
+        model = predictor(scaler, my_model)
+        model.min_date = min(X.index[test_index])
+        model.max_date = min(X.index[test_index])
+        model.mape_train = np.mean(metrica_teste)
+        model.mape_test = np.mean(metrica_teste)
+        model.feature_importance = my_model.feature_importances_
+        model.train_size = data['max_train_size']
+        model.test_size = data['test_size']
+        model.train_date = datetime.now()
+        print(model)
 
-
-
-
-    # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        with open('output/serialized_model.pkl', 'wb') as pickle_file:
+            pickle.dump(model, pickle_file)
+        pickle_file.close()

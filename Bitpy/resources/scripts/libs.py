@@ -58,3 +58,6 @@ from sklearn.metrics import mean_squared_error, r2_score, median_absolute_error
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.model_selection import KFold
+
+#Salvar o modelo para produção
+import joblib
