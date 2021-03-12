@@ -1,0 +1,27 @@
+{% extends "base_admin.html" %}
+{% block content %}
+     <div class="row  border-bottom white-bg dashboard-header">
+        {% if form.errors %}
+	<!-- Error messaging
+	<div id="errors">
+		<div class="inner">
+			<p>There were some errors in the information you entered. Please correct the following:</p>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	 /Error messaging -->
+{% endif %}
+
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Salvar</button>
+    </form>
+
+
+     </div>
+{% endblock %}
