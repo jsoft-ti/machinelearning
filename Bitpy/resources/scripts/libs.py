@@ -59,5 +59,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.model_selection import KFold
 
+
 #Salvar o modelo para produção
 import joblib
+from resources.scripts.predictor import *
+import pickle
+from datetime import datetime
+import yaml
