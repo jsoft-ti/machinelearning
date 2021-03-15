@@ -15,8 +15,11 @@ MY_FORMAT : '%d/%m/%Y'
 ## Lista de campos utilizados em um sumário padrão
 data_columns : ['id', 'coin', 'date', 'opening', 'closing', 'lowest', 'highest', 'volume', 'quantity', 'amount', 'avg_price']
 data_path : 'resources/data/bdcsv.csv'
+data_path_ibov : 'resources/data/nextibov.csv'
 columns_to_remove : ['daxlowest', 'daxhighest', 'djilowest', 'djihighest', 'hsilowest', 'hsihighest']
+columns_to_remove_ibov : ['bvplowest','bvphighest', 'ptrlowest','ptrhighest', 'abelowest', 'abehighest', 'cmilowest', 'cmihighest', 'ggblowest', 'ggbhighest', 'itulowest', 'ituhighest', 'bbdlowest', 'bbdhighest', 'bbalowest', 'bbahighest', 'vallowest', 'valhighest']
 df_closing_columns : ['btc', 'dji', 'dax', 'hsi', 'year', 'month', 'day']
+df_closing_columns_ibov : ['bvsp', 'abev', 'cmi', 'ggb', 'itu','bbd','bba', 'val', 'ptr','year', 'month', 'day']
 window : 5
 max_depth : 10
 num_leaves : 20

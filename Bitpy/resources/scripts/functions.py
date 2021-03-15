@@ -47,7 +47,7 @@ def getStock(stock_array, date_init):
     for stock in stock_array:
         bag_control = 0
         cnn = getConnection()
-        table_name = stock.replace('.','')
+        table_name = stock.replace('.','').replace('^','')
         create_table(table_name)
         tickerData = yf.Ticker(stock)
         tickerDf = pd.DataFrame(
@@ -283,16 +283,39 @@ def setupData():
                     'avg_price'];
 
     ### Intervalo de datas
+    date_init = dt.datetime(2010, 1, 1, 0, 0, 0)
+
+
+    date_now = dt.date.today()
+
+    ### Definindo quais Criptomoedas e quais índices serão utilizados
+    #coin_array = ['BTC']
+    coin_array = []
+    #stock_array = ['DJI', 'DAX', 'HSI', 'PETR4.SA', 'ABEV3', 'CMIG4', 'GGBR4', 'ITUB4', 'BBDC4', 'BBAS3', 'VALE3']
+    #stock_array = ['PETR4.SA']
+    #stock_array = ['^BVSP']
+    # 1 - Este processo carrega os dados utilizados na análise por meio das APIs Mercado Bitcoin
+    # e Yahoo Fynance¶
+    #getCripto(coin_array, date_init)
+    getStock(stock_array, date_init)
+
+def setupDataBlueChips():
+    ### Campos do objeto Summary
+    data_columns = ['id', 'coin', 'date', 'opening', 'closing', 'lowest', 'highest', 'volume', 'quantity', 'amount',
+                    'avg_price'];
+
+    ### Intervalo de datas
     date_init = dt.datetime(2015, 1, 1, 0, 0, 0)
 
 
     date_now = dt.date.today()
 
     ### Definindo quais Criptomoedas e quais índices serão utilizados
-    coin_array = ['BTC']
+    #coin_array = ['BTC']
+    coin_array = []
     #stock_array = ['DJI', 'DAX', 'HSI', 'PETR4.SA', 'ABEV3', 'CMIG4', 'GGBR4', 'ITUB4', 'BBDC4', 'BBAS3', 'VALE3']
-    stock_array = ['PETR4.SA']
-
+    #stock_array = ['PETR4.SA']
+    stock_array = ['^BVSP','ABEV3.SA','CMIG4.SA','GGBR4.SA','ITUB4.SA','BBDC4.SA','BBAS3.SA','VALE3.SA','PETR4.SA']
     # 1 - Este processo carrega os dados utilizados na análise por meio das APIs Mercado Bitcoin
     # e Yahoo Fynance¶
     #getCripto(coin_array, date_init)
@@ -417,5 +440,184 @@ def generatePickleNextBTC(data):
         print(model)
 
         with open('output/serialized_model.pkl', 'wb') as pickle_file:
+            pickle.dump(model, pickle_file)
+        pickle_file.close()
+
+#----------------------------------------------------------------------------------------------------
+def generatePickleNextIBOV(data):
+    with open('resources/scripts/main_variables.yaml') as f:
+        #df = get_data_from_db()
+        df = pd.read_csv(data['data_path_ibov'], sep=';', encoding='utf-8')
+
+        df2 = df.drop(columns=data['columns_to_remove_ibov'])
+        df2 = break_date(df2, 'date')
+        df_closing = pd.DataFrame(columns=data['df_closing_columns_ibov'])
+
+        df_closing_columns_ibov: ['bvsp', 'abev', 'cmi', 'ggb', 'itu', 'bbd', 'bba', 'val',
+
+
+                                  'ptr', 'year', 'month',
+                                  'day']
+
+        df_closing['bvsp'] = df2['bvpclosing']
+        df_closing['abev'] = df2['abeclosing']
+        df_closing['cmi'] = df2['cmiclosing']
+        df_closing['ggb'] = df2['ggbclosing']
+        df_closing['itu'] = df2['ituclosing']
+        df_closing['bbd'] = df2['bbdclosing']
+        df_closing['bba'] = df2['bbaclosing']
+        df_closing['val'] = df2['valclosing']
+        df_closing['ptr'] = df2['ptrclosing']
+        df_closing['year'] = df2['year']
+        df_closing['month'] = df2['month']
+        df_closing['day'] = df2['day']
+
+        df_closing_1 = df_closing.copy() # vou dropar essa feature porque está com valores muito estranhos
+        df_closing_1['day'] = df2['day'].astype(str)
+        df_closing_1['month'] = df_closing['month'].astype(str)
+        df_closing_1['year'] = df_closing['year'].astype(str)
+        df_closing_1['data'] = df_closing_1[['day', 'month', 'year']].agg('-'.join, axis=1)
+        df_closing_1['day'] = df2['day'].astype(int)
+        df_closing_1['month'] = df_closing['month'].astype(int)
+        df_closing_1['year'] = df_closing['year'].astype(int)
+        df_closing_1['date'] = pd.to_datetime(df_closing_1['data'], format='%d-%m-%Y')
+        df_closing_1['day_of_year'] = df_closing_1.date.apply(lambda x: x.dayofyear)
+        df_closing_1['week_of_year'] = df_closing_1.date.apply(lambda x: x.weekofyear)
+        df_closing_1['day'] = df2['day'].astype(int)
+        df_closing_1['initial_month'] = np.where(df_closing_1['day'] < 5, 1, 0)
+        del df_closing_1['data']
+
+        window = data['window']  # janela semanal, 5 dias úteis
+        df_closing_2 = df_closing_1.copy()
+
+        df_closing_2['week_median_bvsp'] = df_closing_1['bvsp'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_abev'] = df_closing_1['abev'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_cmi'] = df_closing_1['cmi'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_ggb'] = df_closing_1['ggb'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_itu'] = df_closing_1['itu'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_bbd'] = df_closing_1['bbd'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_bba'] = df_closing_1['bba'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_val'] = df_closing_1['val'].rolling(window=window).mean().round(2)
+        df_closing_2['week_median_ptr'] = df_closing_1['ptr'].rolling(window=window).mean().round(2)
+
+        df_closing_3 = df_closing_2.copy()
+
+
+        df_closing_3['variacao_sem_bvsp'] = df_closing_3['bvsp'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_abev'] = df_closing_3['abev'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_cmi'] = df_closing_3['cmi'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_ggb'] = df_closing_3['ggb'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_itu'] = df_closing_3['itu'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_bbd'] = df_closing_3['bbd'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_bba'] = df_closing_3['bba'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_val'] = df_closing_3['val'].pct_change(window - 1).round(4)
+        df_closing_3['variacao_sem_ptr'] = df_closing_3['ptr'].pct_change(window - 1).round(4)
+
+
+        # correlação entre bvsp e as demais
+
+        df_closing_3['corr_bvsp_abev'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['abev'])
+        df_closing_3['corr_bvsp_cmi'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['cmi'])
+        df_closing_3['corr_bvsp_ggb'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['ggb'])
+        df_closing_3['corr_bvsp_itu'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['itu'])
+        df_closing_3['corr_bvsp_bbd'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['bbd'])
+        df_closing_3['corr_bvsp_bba'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['bba'])
+        df_closing_3['corr_bvsp_val'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['val'])
+        df_closing_3['corr_bvsp_ptr'] = df_closing_3['bvsp'].rolling(window).corr(df_closing_3['ptr'])
+
+
+        df_closing_4 = df_closing_3.copy()
+        df_closing_4['week_median_bvsp'].shift(periods=window)
+        df_closing_4['week_median_abev'].shift(periods=window)
+        df_closing_4['week_median_cmi'].shift(periods=window)
+        df_closing_4['week_median_ggb'].shift(periods=window)
+        df_closing_4['week_median_itu'].shift(periods=window)
+        df_closing_4['week_median_bbd'].shift(periods=window)
+        df_closing_4['week_median_bba'].shift(periods=window)
+        df_closing_4['week_median_val'].shift(periods=window)
+        df_closing_4['week_median_ptr'].shift(periods=window)
+
+        df_closing_4['variacao_sem_bvsp'].shift(periods=window)
+        df_closing_4['variacao_sem_abev'].shift(periods=window)
+        df_closing_4['variacao_sem_cmi'].shift(periods=window)
+        df_closing_4['variacao_sem_ggb'].shift(periods=window)
+        df_closing_4['variacao_sem_itu'].shift(periods=window)
+        df_closing_4['variacao_sem_bbd'].shift(periods=window)
+        df_closing_4['variacao_sem_bba'].shift(periods=window)
+        df_closing_4['variacao_sem_val'].shift(periods=window)
+        df_closing_4['variacao_sem_ptr'].shift(periods=window)
+
+        df_closing_4['corr_bvsp_abev'].shift(periods=window)
+        df_closing_4['corr_bvsp_cmi'].shift(periods=window)
+        df_closing_4['corr_bvsp_ggb'].shift(periods=window)
+        df_closing_4['corr_bvsp_itu'].shift(periods=window)
+        df_closing_4['corr_bvsp_bbd'].shift(periods=window)
+        df_closing_4['corr_bvsp_bba'].shift(periods=window)
+        df_closing_4['corr_bvsp_val'].shift(periods=window)
+        df_closing_4['corr_bvsp_ptr'].shift(periods=window)
+
+
+        df_closing_4 = df_closing_4.dropna()
+
+        df_closing_5 = df_closing_4.copy()
+        df_closing_5.index = df_closing_5.date
+        df_closing_5 = df_closing_5.drop(columns=['date'])
+        df_closing_5.index = df_closing_5.index.to_period('D')
+        X = df_closing_5.drop(columns=['bvsp'])
+        Y = df_closing_5.bvsp
+
+        lgbm = lgb.LGBMRegressor(max_depth=data['max_depth'], num_leaves=data['num_leaves'],
+                                 n_estimators=data['n_estimators'])
+        tsp = TimeSeriesSplit(gap=data['gap'], max_train_size=data['max_train_size'], n_splits=data['n_splits'],
+                              test_size=data['test_size'])
+        metrica_teste = []
+        metrica_treino = []
+        diff_metrica = []
+        for train_index, test_index in tsp.split(X.index):
+            x_treino, x_teste = X.iloc[train_index], X.iloc[test_index]
+            y_treino, y_teste = Y[train_index], Y[test_index]
+            scaler = StandardScaler().fit(x_treino)
+            x_treino_norm = scaler.fit_transform(x_treino)
+            x_teste_norm = scaler.fit_transform(x_teste)
+
+            my_model = lgbm.fit(x_treino_norm, y_treino)
+
+            pred_treino = my_model.predict(x_treino_norm)
+            pred_teste = my_model.predict(x_teste_norm)
+            df_result = pd.DataFrame(columns=['date', 'value'])
+            df_result['value'] = pred_teste.round(3)
+            df_result['date'] = X.index[test_index]
+            # print(df_result)
+            # display()
+            # y_treino = y_treino.reset_index().drop(columns = 'date').to_numpy()
+            metrica_treino.append(MAPE(y_treino, pred_treino))
+
+            metrica_teste.append(MAPE(y_teste, pred_teste))
+
+            # diff_metrica.append(100*np.abs((MAPE(y_treino, pred_treino) - \
+            # MAPE(y_teste, pred_teste))/\
+            # MAPE(y_teste, pred_teste)))
+        df_r = pd.DataFrame({'Modelo': "LGBM", 'Periodo': data['max_train_size'], \
+                             'Treino': np.mean(metrica_treino), 'Teste': np.mean(metrica_teste)}, index=[0])
+
+        # print(np.mean(metrica_teste))
+        # print(np.mean(metrica_treino))
+        # metrica["Final_teste_"+model] = metrica_final_teste
+        # metrica["Final_treino_"+model] = metrica_final_treino
+        # metrica['diff'] = (metrica['Teste'] - metrica['Treino']).round(2)
+        diff = np.mean(metrica_teste) - np.mean(metrica_treino)
+        # print(diff.round(2))
+        model = predictor(scaler, my_model)
+        model.min_date = min(X.index[test_index])
+        model.max_date = min(X.index[test_index])
+        model.mape_train = np.mean(metrica_teste)
+        model.mape_test = np.mean(metrica_teste)
+        model.feature_importance = my_model.feature_importances_
+        model.train_size = data['max_train_size']
+        model.test_size = data['test_size']
+        model.train_date = datetime.now()
+        print(model)
+
+        with open('output/serialized_model_ibov.pkl', 'wb') as pickle_file:
             pickle.dump(model, pickle_file)
         pickle_file.close()

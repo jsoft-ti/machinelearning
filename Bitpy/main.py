@@ -22,7 +22,7 @@ def print_hi(name):
 # parameters
 with open('resources/scripts/main_variables.yaml') as f:
     data = yaml.load(f, Loader=yaml.FullLoader)
-    df = pd.read_csv(data['data_path'], sep=',', encoding='utf-8')
+    df = pd.read_csv(data['data_path_ibov'], sep=',', encoding='utf-8')
 
     df2 = df.drop(columns=data['columns_to_remove'])
 
