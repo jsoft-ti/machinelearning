@@ -453,11 +453,7 @@ def generatePickleNextIBOV(data):
         df2 = break_date(df2, 'date')
         df_closing = pd.DataFrame(columns=data['df_closing_columns_ibov'])
 
-        df_closing_columns_ibov: ['bvsp', 'abev', 'cmi', 'ggb', 'itu', 'bbd', 'bba', 'val',
 
-
-                                  'ptr', 'year', 'month',
-                                  'day']
 
         df_closing['bvsp'] = df2['bvpclosing']
         df_closing['abev'] = df2['abeclosing']
